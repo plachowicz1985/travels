@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class HotelSearch {
 
     @Test
-    public void searchHotel() throws InterruptedException {
+    public void searchHotel() {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
