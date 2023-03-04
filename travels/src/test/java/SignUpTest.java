@@ -3,20 +3,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SignUpTest {
+public class SignUpTest extends BaseTest{
 
     @Test
-    public void signUp() throws InterruptedException {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-        driver.get("http://www.kurs-selenium.pl/demo/");
+    public void signUpTest() {
+
 
         driver.findElements(By.xpath("//li[@id='li_myaccount']")).stream()
                 .filter(WebElement::isDisplayed)
@@ -27,7 +26,7 @@ public class SignUpTest {
 
         String lastName = "Cobain";
         int randomNumber = (int) (Math.random()*1000);
-        String email = "tester"+randomNumber+"@tester.pl";
+        String email = "tester_0"+randomNumber+"@tester.pl";
         driver.findElement(By.name("firstname")).sendKeys("Kurt");
         driver.findElement(By.name("lastname")).sendKeys(lastName);
         driver.findElement(By.name("phone")).sendKeys("510520530");
@@ -40,7 +39,5 @@ public class SignUpTest {
         WebElement heading = driver.findElement(By.xpath("//h3[@class='RTL']"));
         Assert.assertTrue(heading.getText().contains(lastName));
         Assert.assertEquals(heading.getText(),"Hi, Kurt Cobain");
-
-        driver.quit();
     }
 }

@@ -1,21 +1,12 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
-
-public class HotelSearchWithoutName {
+public class HotelSearchWithoutNameTest extends BaseTest{
 
     @Test
-    public void searchHotel() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-        driver.get("http://www.kurs-selenium.pl/demo/");
-
+    public void searchHotelTest() {
         driver.findElement(By.name("checkin")).sendKeys("27/02/2023");
         driver.findElement(By.name("checkout")).click();
         driver.findElements(By.xpath("//td[@class='day ' and text()='28']"))
@@ -33,8 +24,5 @@ public class HotelSearchWithoutName {
 
         Assert.assertTrue(noResult.isDisplayed());
         Assert.assertEquals(noResult.getText(), "No Results Found");
-
-        driver.quit();
-
     }
 }
