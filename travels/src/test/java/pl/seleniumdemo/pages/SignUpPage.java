@@ -6,6 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class SignUpPage {
 
     @FindBy (name = "firstname")
@@ -28,6 +31,9 @@ public class SignUpPage {
 
     @FindBy (xpath = "//button[@type='submit' and text()=' Sign Up']")
     private WebElement submitButton;
+
+    @FindBy (xpath = "//form[@id='headersignupform'] // p")
+    private List<WebElement> errors;
 
 
     public SignUpPage(WebDriver driver) {
@@ -62,4 +68,10 @@ public class SignUpPage {
         submitButton.click();
     }
 
+    public List<String> getErrors() {
+
+        return errors.stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
+    }
 }
