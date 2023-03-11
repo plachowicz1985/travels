@@ -1,13 +1,11 @@
 package pl.seleniumdemo.tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pl.seleniumdemo.pages.HotelSearchPage;
+import pl.seleniumdemo.pages.ResultsPage;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class HotelSearchTest extends BaseTest {
 
@@ -15,16 +13,14 @@ public class HotelSearchTest extends BaseTest {
     public void searchHotelTest () {
 
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+
         hotelSearchPage.setCity("Dubai");
         hotelSearchPage.setDates("07/03/2023", "21/03/2023");
-        hotelSearchPage.setTravellers();
+        hotelSearchPage.setTravellers(1, 2);
         hotelSearchPage.performSearch();
 
-        List<String> hotelNames = driver.findElements(By.xpath("//h4[contains(@class, 'list_title')]//b")).stream()
-                                                                                .map(el->el.getAttribute("textContent"))
-                                                                                .collect(Collectors.toList());
-        System.out.println(hotelNames.size());
-        hotelNames.forEach(System.out::println);
+        ResultsPage resultsPage = new ResultsPage(driver);
+        List<String> hotelNames = resultsPage.getHotelNames();
 
         Assert.assertEquals("Jumeirah Beach Hotel", hotelNames.get(0));
         Assert.assertEquals("Oasis Beach Tower", hotelNames.get(1));
